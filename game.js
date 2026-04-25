@@ -4,12 +4,20 @@ let currentTeam = 1;
 let selectedGrade = null;
 let currentSubject = null;
 
-// Sinf tanlash
+// O'yin boshlanganda UI ni yangilash
+window.onload = function() {
+    console.log("O'yin yuklandi!");
+    updateUI();
+};
+
+// Sinf tanlash funktsiyasi
 function selectGrade(grade) {
     selectedGrade = grade;
+    console.log(grade + "-sinf tanlandi");
+    
     const content = document.getElementById('main-content');
     content.innerHTML = `
-        <h3>${grade}-sinf uchun fan tanlang:</h3>
+        <h3 style="color:white;">${grade}-sinf uchun fan tanlang:</h3>
         <div class="grid">
             <button class="card" onclick="startQuiz('Matematika')">Matematika</button>
             <button class="card" onclick="startQuiz('Ingliz tili')">Ingliz tili</button>
@@ -17,21 +25,27 @@ function selectGrade(grade) {
     `;
 }
 
-// Fan tanlanganda savol chiqarish
+// Savolni chiqarish funktsiyasi
 function startQuiz(subject) {
     currentSubject = subject;
+    console.log(subject + " boshlandi");
+
+    // Savollar bazasi borligini tekshirish
+    if (!questionsData || !questionsData[selectedGrade] || !questionsData[selectedGrade][subject]) {
+        alert("Bu fan yoki sinf uchun savollar hali qo'shilmagan!");
+        return;
+    }
+
     const questions = questionsData[selectedGrade][subject];
-    
-    // Tasodifiy bitta savol tanlash
     const randomQ = questions[Math.floor(Math.random() * questions.length)];
     
     const content = document.getElementById('main-content');
     content.innerHTML = `
-        <div class="question-box" style="text-align:center; padding: 20px;">
-            <div class="badge" style="background:orange; padding:5px; border-radius:5px;">
+        <div class="question-box" style="text-align:center;">
+            <div class="badge" style="background:#ffcc00; color:black; padding:10px; border-radius:10px; margin-bottom:10px; display:inline-block;">
                 ${randomQ.difficulty} ballik savol
             </div>
-            <h2 style="margin: 20px 0;">${randomQ.q}</h2>
+            <h2 style="color:white; margin:20px;">${randomQ.q}</h2>
             <div class="grid">
                 ${randomQ.options.map(opt => `
                     <button class="card" onclick="checkAnswer('${opt}', '${randomQ.a}', ${randomQ.difficulty})">
@@ -43,7 +57,6 @@ function startQuiz(subject) {
     `;
 }
 
-// Javobni tekshirish
 function checkAnswer(userAns, correctAns, points) {
     if (userAns === correctAns) {
         alert("To'g'ri! +" + points + " ball");
@@ -55,12 +68,10 @@ function checkAnswer(userAns, correctAns, points) {
     }
     
     updateUI();
-    
-    // Navbatni almashtirish va fanda qolish
     currentTeam = currentTeam === 1 ? 2 : 1;
     document.getElementById('turn-display').innerText = `Jamoa ${currentTeam} ning navbati`;
     
-    // Keyingi savolga o'tish (avtomatik o'sha fan ichida qoladi)
+    // Savol javobdan keyin o'sha fan ichida qoladi
     startQuiz(currentSubject);
 }
 
@@ -68,3 +79,8 @@ function updateUI() {
     document.getElementById('score1').innerText = score1;
     document.getElementById('score2').innerText = score2;
 }
+
+// Funktsiyalarni global qilish (HTML ko'rishi uchun)
+window.selectGrade = selectGrade;
+window.startQuiz = startQuiz;
+window.checkAnswer = checkAnswer;
