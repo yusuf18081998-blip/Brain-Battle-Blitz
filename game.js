@@ -84,3 +84,6 @@ function updateUI() {
 window.selectGrade = selectGrade;
 window.startQuiz = startQuiz;
 window.checkAnswer = checkAnswer;
+window.selectGrade = selectGrade;
+window.startQuiz = startQuiz;
+window.checkAnswer = checkAnswer;
