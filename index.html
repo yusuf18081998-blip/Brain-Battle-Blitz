@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Battle Blitz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="score-board">
+        <div class="team" id="team1-area">
+            <h2>Jamoa 1</h2>
+            <div id="score1">0</div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="team" id="team2-area">
+            <h2>Jamoa 2</h2>
+            <div id="score2">0</div>
+        </div>
+    </div>
+
+    <div id="game-screen">
+        <h2 id="turn-display">Jamoa 1 ning navbati</h2>
+        <div id="main-content">
+            <h3>Sinf tanlang:</h3>
+            <div class="grid" id="grade-selection">
+                <button class="card" onclick="selectGrade(5)">5</button>
+                <button class="card" onclick="selectGrade(6)">6</button>
+                <button class="card" onclick="selectGrade(7)">7</button>
+                <button class="card" onclick="selectGrade(8)">8</button>
+                <button class="card" onclick="selectGrade(9)">9</button>
+                <button class="card" onclick="selectGrade(10)">10</button>
+                <button class="card" onclick="selectGrade(11)">11</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
